@@ -1,24 +1,40 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Redirect, Slot, useSegments } from 'expo-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useAuthStore } from '@/store/authStore';
+import { useEffect } from 'react';
+import '../global.css';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+const queryClient = new QueryClient();
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+function RootNavigation() {
+  const { token, role, isHydrated, hydrate } = useAuthStore();
+  const segments = useSegments();
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  if (!isHydrated) return null; // splash / loading state
+
+  const inAuthGroup = segments[0] === '(auth)';
+
+  if (!token && !inAuthGroup) {
+    return <Redirect href="/(auth)/login" />;
+  }
+
+  if (token && inAuthGroup) {
+    if (role === 'student') return <Redirect href="/(student)" />;
+    if (role === 'landlord') return <Redirect href="/(landlord)" />;
+    if (role === 'admin') return <Redirect href="/(admin)" />;
+  }
+
+  return <Slot />;
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <RootNavigation />
+    </QueryClientProvider>
   );
 }
