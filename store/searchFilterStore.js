@@ -1,14 +1,14 @@
 import { create } from 'zustand';
+import { DEFAULT_PROPERTY_FILTERS } from '@/constants/properties';
+
 const initialFilters = {
-  priceMin: null,
-  priceMax: null,
-  distanceKm: null,
-  amenities: [],
+  ...DEFAULT_PROPERTY_FILTERS,
 };
+
 export const useSearchFilterStore = create((set) => ({
   campusId: null,
   ...initialFilters,
   setCampusId: (id) => set({ campusId: id }),
-  setFilters: (partial) => set(partial),
+  setFilters: (partial) => set((state) => ({ ...state, ...partial })),
   reset: () => set({ campusId: null, ...initialFilters }),
 }));

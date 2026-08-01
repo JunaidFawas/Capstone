@@ -1,192 +1,81 @@
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Link } from 'expo-router';
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 
-import {
-  AuthButton,
-  AuthDefaultFieldIcon,
-  AuthHeader,
-  AuthInput,
-  AuthPhonePrefix,
-  AuthScreen,
-  AuthTrailingIcon,
-} from '@/components/auth';
+import { AuthChoiceCard, AuthHeader, AuthScreen } from '@/components/auth';
 import { AuthColors, AuthFonts } from '@/constants/theme';
 
-function SocialIcon({ name, family = 'Ionicons', color }) {
-  const size = 18;
-
-  if (family === 'AntDesign') {
-    return <AntDesign color={color ?? AuthColors.heading} name={name} size={size} />;
-  }
-
-  if (family === 'FontAwesome') {
-    return <FontAwesome color={color ?? AuthColors.heading} name={name} size={size} />;
-  }
-
-  return <Ionicons color={color ?? AuthColors.heading} name={name} size={size} />;
-}
-
 export default function RegisterScreen() {
-  const [accepted, setAccepted] = useState(true);
+  const router = useRouter();
+
+  const goToDetails = (role) => {
+    router.push(`/(auth)/register-details?role=${role}`);
+  };
 
   return (
-    <AuthScreen>
+    <AuthScreen
+      footer={
+        <Text style={styles.note}>
+          You can always change this later in your account
+          {'\n'}
+          settings
+        </Text>
+      }
+    >
       <AuthHeader
-        subtitle="Fill the form below to create an account."
-        title="Create an Account"
+        title="Who are you?"
+        subtitle="Choose the option that best describes you to continue."
       />
 
-      <AuthInput
-        autoCapitalize="words"
-        autoComplete="name"
-        label="Name"
-        leftAccessory={<AuthDefaultFieldIcon name="person-outline" />}
-        placeholder="Enter your full name"
-        required
-        rightAccessory={<AuthTrailingIcon name="person-outline" />}
-      />
-
-      <AuthInput
-        autoCapitalize="none"
-        autoComplete="email"
-        keyboardType="email-address"
-        label="Email"
-        leftAccessory={<AuthDefaultFieldIcon name="mail-outline" />}
-        placeholder="Enter your email"
-        required
-        rightAccessory={<AuthTrailingIcon name="mail-outline" />}
-      />
-
-      <AuthInput
-        autoCapitalize="none"
-        autoComplete="tel"
-        keyboardType="phone-pad"
-        label="Phone Number"
-        leftAccessory={<AuthPhonePrefix />}
-        placeholder="Phone Number"
-        required
-      />
-
-      <Pressable onPress={() => setAccepted((current) => !current)} style={styles.checkboxRow}>
-        <View style={[styles.checkbox, accepted ? styles.checkboxChecked : null]}>
-          {accepted ? <Text style={styles.checkboxTick}>✓</Text> : null}
+      <View style={styles.cards}>
+        <View style={styles.firstSection}>
+          <AuthChoiceCard
+            accent={AuthColors.primary}
+            buttonLabel="Continue as a Student"
+            description="Create your Student account and find your accommodation near campus"
+            imageSource={require('../../assets/images/auth/student.png')}
+            imageStyle={styles.studentImage}
+            onPress={() => goToDetails('student')}
+            title="I'm a Student"
+          />
         </View>
 
-        <Text style={styles.checkboxText}>
-          I agree to the <Text style={styles.link}>Terms of Service</Text> and{' '}
-          <Text style={styles.link}>Privacy Policy</Text>
-        </Text>
-      </Pressable>
-
-      <AuthButton title="Create an Account" />
-
-      <View style={styles.dividerRow}>
-        <View style={styles.dividerLine} />
-        <Text style={styles.dividerText}>Continue with</Text>
-        <View style={styles.dividerLine} />
+        <View style={styles.secondSection}>
+          <AuthChoiceCard
+            accent={AuthColors.primary}
+            buttonLabel="Continue as a Landlord"
+            description="Create your landlord account, list and manage student accommodation."
+            imageSource={require('../../assets/images/auth/landlord.png')}
+            imageStyle={styles.landlordImage}
+            onPress={() => goToDetails('landlord')}
+            title="I'm a Landlord"
+          />
+        </View>
       </View>
-
-      <View style={styles.socialRow}>
-        <Pressable style={styles.socialButton}>
-          <SocialIcon family="AntDesign" name="google" color="#EA4335" />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <SocialIcon family="FontAwesome" name="apple" />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <SocialIcon family="Ionicons" name="close" />
-        </Pressable>
-        <Pressable style={styles.socialButton}>
-          <SocialIcon family="FontAwesome" name="facebook" color="#1877F2" />
-        </Pressable>
-      </View>
-
-      <Text style={styles.footerText}>
-        Already have an account?{' '}
-        <Link href="/(auth)/login" style={styles.footerLink}>
-          Sign In
-        </Link>
-      </Text>
     </AuthScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  checkboxRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 18,
+  firstSection: {
+    marginBottom: 36,
   },
-  checkbox: {
-    alignItems: 'center',
-    borderColor: '#D7D7D7',
-    borderRadius: 4,
-    borderWidth: 1,
-    height: 22,
-    justifyContent: 'center',
-    marginRight: 10,
-    width: 22,
+  secondSection: {
+    marginBottom: 20,
   },
-  checkboxChecked: {
-    borderColor: AuthColors.accent,
+  studentImage: {
+    height: 88,
+    width: 88,
   },
-  checkboxTick: {
-    color: AuthColors.accent,
-    fontSize: 13,
-    fontWeight: '700',
-    lineHeight: 14,
+  landlordImage: {
+    height: 100,
+    width: 100,
   },
-  checkboxText: {
-    color: AuthColors.heading,
-    flex: 1,
-    fontFamily: AuthFonts.body,
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  link: {
-    color: AuthColors.accent,
-    fontWeight: '500',
-  },
-  dividerRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 22,
-  },
-  dividerLine: {
-    backgroundColor: AuthColors.divider,
-    flex: 1,
-    height: 1,
-  },
-  dividerText: {
-    color: AuthColors.heading,
-    fontFamily: AuthFonts.body,
-    fontSize: 13,
-  },
-  socialRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 16,
-    marginTop: 14,
-  },
-  socialButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 34,
-    width: 34,
-  },
-  footerText: {
+  note: {
     color: AuthColors.muted,
     fontFamily: AuthFonts.body,
-    fontSize: 14,
-    marginTop: 16,
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: 4,
     textAlign: 'center',
-  },
-  footerLink: {
-    color: AuthColors.accent,
-    fontWeight: '700',
   },
 });

@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { AuthColors, AuthFonts } from '@/constants/theme';
+import { useAuthKeyboard } from './AuthKeyboardContext';
 
 export function AuthInput({
   label,
@@ -15,9 +16,11 @@ export function AuthInput({
   ...textInputProps
 }) {
   const [focused, setFocused] = useState(false);
+  const containerRef = useRef(null);
+  const { scrollToField } = useAuthKeyboard();
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View collapsable={false} ref={containerRef} style={[styles.container, containerStyle]}>
       <Text style={styles.label}>
         {label}
         {required ? <Text style={styles.required}> *</Text> : null}
@@ -34,6 +37,10 @@ export function AuthInput({
           }}
           onFocus={(event) => {
             setFocused(true);
+            const scheduleScroll = globalThis.requestAnimationFrame ?? ((cb) => setTimeout(cb, 0));
+            scheduleScroll(() => {
+              scrollToField?.(containerRef);
+            });
             textInputProps.onFocus?.(event);
           }}
           placeholderTextColor={AuthColors.muted}
@@ -57,9 +64,9 @@ export function AuthDefaultFieldIcon({ name }) {
   return <Ionicons color={AuthColors.borderStrong} name={name} size={18} />;
 }
 
-export function AuthPhonePrefix() {
+export function AuthPhonePrefix({ onPress, accessibilityLabel = 'Select country code' }) {
   return (
-    <View style={styles.phonePrefix}>
+    <Pressable accessibilityLabel={accessibilityLabel} hitSlop={10} onPress={onPress} style={styles.phonePrefix}>
       <View style={styles.flag}>
         <View style={styles.flagGreen} />
         <View style={styles.flagWhite} />
@@ -67,7 +74,7 @@ export function AuthPhonePrefix() {
       </View>
       <Text style={styles.chevron}>⌄</Text>
       <View style={styles.phoneDivider} />
-    </View>
+    </Pressable>
   );
 }
 
@@ -77,7 +84,7 @@ export function AuthTrailingIcon({ name }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: 18,
   },
   label: {
     color: AuthColors.body,
@@ -95,8 +102,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     flexDirection: 'row',
-    minHeight: 45,
-    paddingHorizontal: 12,
+    minHeight: 48,
+    paddingHorizontal: 16,
   },
   fieldFocused: {
     borderColor: AuthColors.borderStrong,
@@ -106,13 +113,13 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: AuthFonts.body,
     fontSize: 14,
-    paddingVertical: 10,
+    paddingVertical: 11,
   },
   inputWithLeftAccessory: {
-    marginLeft: 8,
+    marginLeft: 10,
   },
   inputWithRightAccessory: {
-    marginRight: 8,
+    marginRight: 10,
   },
   leftAccessory: {
     alignItems: 'center',

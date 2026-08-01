@@ -7,6 +7,7 @@ export function AuthButton({
   onPress,
   disabled = false,
   style,
+  surfaceStyle,
   textStyle,
   accessibilityLabel,
 }) {
@@ -21,6 +22,7 @@ export function AuthButton({
         <View
           style={[
             styles.surface,
+            surfaceStyle,
             pressed && !disabled ? styles.surfacePressed : null,
             disabled ? styles.surfaceDisabled : null,
           ]}
@@ -43,9 +45,9 @@ const styles = StyleSheet.create({
     backgroundColor: AuthColors.primary,
     borderRadius: 12,
     justifyContent: 'center',
-    minHeight: 44,
-    paddingHorizontal: 20,
-    paddingVertical: 13,
+    minHeight: 48,
+    paddingHorizontal: 24,
+    paddingVertical: 0,
   },
   surfacePressed: {
     backgroundColor: AuthColors.primaryPressed,

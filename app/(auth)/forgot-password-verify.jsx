@@ -3,18 +3,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
-import {
-  AuthButton,
-  AuthHeader,
-  AuthOtpCodeInput,
-  AuthScreen,
-} from '@/components/auth';
+import { AuthButton, AuthHeader, AuthOtpCodeInput, AuthScreen } from '@/components/auth';
 import { AuthColors, AuthFonts } from '@/constants/theme';
 
-export default function OtpScreen() {
+export default function ForgotPasswordVerifyScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const role = typeof params.role === 'string' ? params.role : 'student';
+  const email = typeof params.email === 'string' ? params.email : 'g******@gmail.com';
   const [code, setCode] = useState('');
   const [remainingSeconds, setRemainingSeconds] = useState(7 * 60 + 45);
 
@@ -36,31 +31,39 @@ export default function OtpScreen() {
     return `${minutes}:${seconds}`;
   }, [remainingSeconds]);
 
-  const resendEnabled = remainingSeconds === 0;
+  const maskedEmail = useMemo(() => {
+    const [namePart, domainPart] = email.split('@');
+    if (!domainPart || namePart.length <= 2) {
+      return email;
+    }
 
-  const goToCompleteProfile = () => {
-    router.push(`/(auth)/complete-profile?role=${role}`);
+    return `${namePart[0]}******@${domainPart}`;
+  }, [email]);
+
+  const goToCreatePassword = () => {
+    router.push({ pathname: '/(auth)/forgot-password-create', params: { email } });
+  };
+
+  const resendCode = () => {
+    setRemainingSeconds(7 * 60 + 45);
   };
 
   return (
     <AuthScreen>
-      <AuthHeader
-        title="Verify Your Email"
-        subtitle="Verify your email to continue."
-      />
+      <AuthHeader title="Verify Your Email" subtitle="Verify your email to continue." />
 
       <View style={styles.iconWrap}>
         <View style={styles.iconCircle}>
-          <MaterialCommunityIcons color={AuthColors.accent} name="email-outline" size={28} />
+          <MaterialCommunityIcons color={AuthColors.primary} name="email-outline" size={24} />
         </View>
       </View>
 
       <Text style={styles.instructions}>
-        Enter the 4 digit OTP code sent to your email <Text style={styles.email}>g******@gmail.com</Text> below to
+        Enter the 4 digit OTP code sent to your email <Text style={styles.email}>{maskedEmail}</Text> below to
         verify your email address.
       </Text>
 
-      <AuthOtpCodeInput onChange={setCode} value={code} />
+      <AuthOtpCodeInput length={4} onChange={setCode} value={code} />
 
       <View style={styles.timerRow}>
         <Text style={styles.timerLabel}>code expires in</Text>
@@ -69,19 +72,18 @@ export default function OtpScreen() {
 
       <Text style={styles.resendText}>
         Didn&apos;t get code?{' '}
-        <Text
-          onPress={resendEnabled ? () => setRemainingSeconds(7 * 60 + 45) : undefined}
-          suppressHighlighting
-          style={[styles.resendLink, !resendEnabled && styles.resendLinkDisabled]}
-        >
+        <Text onPress={resendCode} suppressHighlighting style={styles.resendLink}>
           Resend Code
         </Text>
       </Text>
 
+      <AuthButton disabled={code.length !== 4} onPress={goToCreatePassword} title="Verify Email Address" />
       <AuthButton
-        disabled={code.length !== 4}
-        onPress={goToCompleteProfile}
-        title="Verify Email Address"
+        onPress={() => router.back()}
+        style={styles.backButton}
+        surfaceStyle={styles.secondarySurface}
+        textStyle={styles.secondaryText}
+        title="Go Back"
       />
     </AuthScreen>
   );
@@ -96,9 +98,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(235, 116, 73, 0.12)',
     borderRadius: 999,
-    height: 72,
+    height: 56,
     justifyContent: 'center',
-    width: 72,
+    width: 56,
   },
   instructions: {
     color: AuthColors.body,
@@ -141,7 +143,13 @@ const styles = StyleSheet.create({
     color: AuthColors.accent,
     fontWeight: '700',
   },
-  resendLinkDisabled: {
-    opacity: 0.45,
+  secondarySurface: {
+    backgroundColor: '#F7E2DA',
+  },
+  secondaryText: {
+    color: AuthColors.primary,
+  },
+  backButton: {
+    marginTop: 12,
   },
 });

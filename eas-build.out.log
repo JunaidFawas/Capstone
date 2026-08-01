@@ -1,0 +1,69 @@
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+Resolved "preview" environment for the build. Learn more: https://docs.expo.dev/eas/environment-variables/#setting-the-environment-for-your-builds
+No environment variables with visibility "Plain text" and "Sensitive" found for the "preview" environment on EAS.
+
+
+
+The field "cli.appVersionSource" is not set, but it will be required in the future. Learn more: https://docs.expo.dev/build-reference/app-versions/
+√ Using remote Android credentials (Expo server)
+√ Using Keystore from configuration: Build Credentials msOamBNeP8 (default)
+
+Compressing project files and uploading to EAS Build. Learn more: https://expo.fyi/eas-build-archive
+- Compressing project files
+- Uploading to EAS Build (0 / 1.4 MB)
+√ Uploaded to EAS 6s
+- Computing project fingerprint
+⏱  [profile] getExpoAutolinkingIosSourcesAsync: 28.506ms
+⏱  [profile] getPackageJsonScriptSourcesAsync: 25.671ms
+⏱  [profile] getBareIosSourcesAsync: 24.804ms
+⏱  [profile] getCoreAutolinkingSourcesFromExpoIos: 6.679ms
+⏱  [profile] getCoreAutolinkingSourcesFromRncCliAsync: 6.569ms
+⏱  [profile] getDefaultPackageSourcesAsync: 3.392ms
+⏱  [profile] getExpoConfigSourcesAsync: 35.667ms
+⏱  [profile] getEasBuildSourcesAsync: 34.166ms
+⏱  [profile] getExpoCNGPatchSourcesAsync: 34.573ms
+⏱  [profile] getGitIgnoreSourcesAsync: 34.992ms
+⏱  [profile] getBareAndroidSourcesAsync: 34.198ms
+⏱  [profile] getPatchPackageSourcesAsync: 15.465ms
+⏱  [profile] getExpoAutolinkingAndroidSourcesAsync: 657.724ms
+⏱  [profile] getCoreAutolinkingSourcesFromExpoAndroid: 4.026s
+⌛️ Computing the project fingerprint is taking longer than expected...
+⏩ To skip this step, set the environment variable: EAS_SKIP_AUTO_FINGERPRINT=1
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-eas-client/android): 9.262s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-constants/android): 9.264s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-asset/android): 9.284s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-font/android): 9.286s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-image-loader/android): 9.291s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-json-utils/android): 9.342s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-keep-awake/android): 9.359s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-linking/android): 9.366s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-splash-screen/android): 9.423s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-web-browser/android): 9.468s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-structured-headers/android): 9.470s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-updates/expo-updates-gradle-plugin): 9.476s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-updates-interface/android): 9.478s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo): 9.860s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-haptics/android): 9.877s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-file-system/android): 9.895s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-image-picker/android): 9.895s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-image/android): 9.962s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-manifests/android): 9.963s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-modules-core/expo-module-gradle-plugin): 10.007s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-secure-store/android): 10.290s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-system-ui/android): 10.312s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-modules-core/android): 10.628s
+⏱  [profile] createDirHashResultsAsync(node_modules/expo-updates/android): 10.662s
+⏱  [profile] createDirHashResultsAsync(node_modules/react-native-reanimated): 10.771s
+⏱  [profile] createDirHashResultsAsync(node_modules/react-native-safe-area-context): 10.772s
+⏱  [profile] createDirHashResultsAsync(node_modules/react-native-worklets): 10.850s
+⏱  [profile] createDirHashResultsAsync(node_modules/react-native-gesture-handler): 10.894s
+⏱  [profile] createDirHashResultsAsync(node_modules/react-native-screens): 10.933s
+√ Computed project fingerprint
+
+See logs: https://expo.dev/accounts/olarewajuuu/projects/campusnest/builds/4f94dde9-0f4b-4554-a19c-7f781677af79
+
+Waiting for build to complete. You can press Ctrl+C to exit.
+- Waiting for build to complete.
+× Build canceled
+
+🤖 Android build was canceled

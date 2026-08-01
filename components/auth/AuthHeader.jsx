@@ -14,15 +14,14 @@ export function AuthHeader({ title, subtitle }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingBottom: 18,
-    paddingHorizontal: 8,
+    paddingBottom: 24,
   },
   title: {
     color: AuthColors.heading,
     fontFamily: AuthFonts.display,
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
-    letterSpacing: -0.4,
+    letterSpacing: -0.6,
     textAlign: 'center',
   },
   subtitle: {
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
     fontFamily: AuthFonts.body,
     fontSize: 13,
     lineHeight: 18,
-    marginTop: 6,
+    marginTop: 10,
     textAlign: 'center',
   },
 });
