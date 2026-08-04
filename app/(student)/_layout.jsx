@@ -82,6 +82,10 @@ export default function StudentLayout() {
           ),
         }}
       />
+      <Tabs.Screen name="property/[id]" options={{ href: null }} />
+      <Tabs.Screen name="request-viewing/[id]" options={{ href: null }} />
+      <Tabs.Screen name="select-viewing-time/[id]" options={{ href: null }} />
+      <Tabs.Screen name="viewing-confirmation/[id]" options={{ href: null }} />
     </Tabs>
   );
 }

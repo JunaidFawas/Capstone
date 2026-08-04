@@ -16,7 +16,7 @@ import { useRouter } from 'expo-router';
 
 import { PropertyFilterModal } from '@/components/student/PropertyFilterModal';
 import { AuthColors, AuthFonts } from '@/constants/theme';
-import { filterListings, LISTING_TYPES, PROPERTY_IMAGE, PROPERTY_LISTINGS } from '@/constants/properties';
+import { filterListings, LISTING_TYPES, PROPERTY_LISTINGS } from '@/constants/properties';
 import { useSearchFilterStore } from '@/store/searchFilterStore';
 
 export default function StudentExploreScreen() {
@@ -100,7 +100,7 @@ export default function StudentExploreScreen() {
                   onPress={() => openListing(item.id)}
                   style={[styles.resultRow, index === suggestionList.length - 1 ? styles.resultRowLast : null]}
                 >
-                  <Image contentFit="cover" source={PROPERTY_IMAGE} style={styles.resultThumb} />
+                  <Image contentFit="cover" source={item.image} style={styles.resultThumb} />
                   <View style={styles.resultTextBlock}>
                     <Text style={styles.resultTitle}>{item.title}</Text>
                     <View style={styles.resultMetaRow}>
@@ -168,7 +168,7 @@ function SectionHeader({ title }) {
 function RecommendedCard({ item, width, onPress }) {
   return (
     <Pressable onPress={onPress} style={[styles.card, { width }]}>
-      <Image contentFit="cover" source={PROPERTY_IMAGE} style={styles.cardImage} />
+      <Image contentFit="cover" source={item.image} style={styles.cardImage} />
       <View style={styles.cardOverlay} />
       <View style={styles.cardHeart}>
         <Ionicons color="#FFFFFF" name="heart" size={14} />

@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PropertyFilterModal } from '@/components/student/PropertyFilterModal';
 import { AuthColors, AuthFonts } from '@/constants/theme';
-import { filterListings, PROPERTY_IMAGE, PROPERTY_LISTINGS, PROPERTY_TYPES } from '@/constants/properties';
+import { filterListings, PROPERTY_IMAGES, PROPERTY_LISTINGS, PROPERTY_TYPES } from '@/constants/properties';
 import { useSearchFilterStore } from '@/store/searchFilterStore';
 
 const HOME_FEATURED_IDS = ['greenview-lodge', 'campus-comfort'];
@@ -97,10 +97,11 @@ export default function StudentHomeScreen() {
             contentContainerStyle={styles.chipRow}
             showsHorizontalScrollIndicator={false}
           >
-            {PROPERTY_TYPES.map((item) => (
+            {PROPERTY_TYPES.map((item, index) => (
               <PropertyChip
                 key={item.id}
                 item={item}
+                image={PROPERTY_IMAGES[index % PROPERTY_IMAGES.length]}
                 selected={item.id === selectedType}
                 onPress={() => setSelectedType(item.id)}
               />
@@ -167,11 +168,11 @@ function SearchPreview({ onPress, onFilterPress }) {
   );
 }
 
-function PropertyChip({ item, selected, onPress }) {
+function PropertyChip({ image, item, selected, onPress }) {
   return (
     <Pressable onPress={onPress} style={[styles.propertyChip, selected && styles.propertyChipSelected]}>
       <View style={styles.propertyThumbWrap}>
-        <Image contentFit="cover" source={PROPERTY_IMAGE} style={styles.propertyThumb} />
+        <Image contentFit="cover" source={image} style={styles.propertyThumb} />
       </View>
       <Text style={[styles.propertyChipLabel, selected && styles.propertyChipLabelSelected]}>{item.label}</Text>
     </Pressable>
@@ -182,7 +183,7 @@ function PropertyCard({ item, width, onPress, variant = 'light' }) {
   return (
     <Pressable onPress={onPress} style={[styles.featuredCard, { width }]}>
       <View style={styles.featuredImageWrap}>
-        <Image contentFit="cover" source={PROPERTY_IMAGE} style={styles.featuredImage} />
+        <Image contentFit="cover" source={item.image} style={styles.featuredImage} />
         <View style={styles.verifiedBadge}>
           <Ionicons color="#69B66B" name="checkmark-circle" size={12} />
           <Text style={styles.verifiedText}>Verified</Text>

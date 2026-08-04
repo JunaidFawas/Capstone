@@ -1,4 +1,13 @@
-export const PROPERTY_IMAGE = require('../assets/images/home/house1.png');
+export const PROPERTY_IMAGES = [
+  require('../assets/images/home/house1.png'),
+  require('../assets/images/home/house2.png'),
+  require('../assets/images/home/house3.png'),
+  require('../assets/images/home/house4.png'),
+  require('../assets/images/home/house5.png'),
+  require('../assets/images/home/house6.png'),
+];
+
+export const PROPERTY_IMAGE = PROPERTY_IMAGES[0];
 
 export const PROPERTY_TYPES = [
   { id: 'private-room', label: 'Private room' },
@@ -49,6 +58,7 @@ export const DEFAULT_PROPERTY_FILTERS = {
 export const PROPERTY_LISTINGS = [
   {
     id: 'greenview-lodge',
+    image: PROPERTY_IMAGES[0],
     title: 'Greenview Lodge',
     price: 'N350,000',
     priceValue: 350000,
@@ -68,6 +78,7 @@ export const PROPERTY_LISTINGS = [
   },
   {
     id: 'campus-comfort',
+    image: PROPERTY_IMAGES[1],
     title: 'Campus Comfort',
     price: 'N350,000',
     priceValue: 350000,
@@ -87,6 +98,7 @@ export const PROPERTY_LISTINGS = [
   },
   {
     id: 'luna-haven',
+    image: PROPERTY_IMAGES[2],
     title: 'Luna Haven',
     price: 'N250,000',
     priceValue: 250000,
@@ -106,6 +118,7 @@ export const PROPERTY_LISTINGS = [
   },
   {
     id: 'maple-court',
+    image: PROPERTY_IMAGES[3],
     title: 'Maple Court',
     price: 'N280,000',
     priceValue: 280000,
@@ -125,6 +138,7 @@ export const PROPERTY_LISTINGS = [
   },
   {
     id: 'ivy-student-lodge',
+    image: PROPERTY_IMAGES[4],
     title: 'The Ivy Student Lodge',
     price: 'N320,000',
     priceValue: 320000,
@@ -144,6 +158,7 @@ export const PROPERTY_LISTINGS = [
   },
   {
     id: 'oakwood-student-lodge',
+    image: PROPERTY_IMAGES[5],
     title: 'Oakwood Student Lodge',
     price: 'N290,000',
     priceValue: 290000,
